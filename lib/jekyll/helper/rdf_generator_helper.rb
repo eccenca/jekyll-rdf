@@ -123,11 +123,23 @@ module Jekyll
         def create_page(site, resource, mapper, global_config)
           page = RdfPageData.new(site, site.source, resource, mapper, global_config)
           if(page.complete)
-            site.pages << page
-            resource.add_necessities(site, page)
-            resource.subResources.each {|key, value|
-              value.add_necessities(site, page)
-            } unless resource.subResources.nil?
+            changes = false
+            site.pages.map!{|old_page|
+              if (File.join(old_page.dir, old_page.name) == File.join(page.dir, page.name))
+                changes||=true
+                page.assimilate_page(old_page)
+                page
+              else
+                old_page
+              end
+            }
+            unless changes
+              site.pages << page
+              resource.add_necessities(site, page)
+              resource.subResources.each {|key, value|
+                value.add_necessities(site, page)
+              } unless resource.subResources.nil?
+            end
           end
         end
       end

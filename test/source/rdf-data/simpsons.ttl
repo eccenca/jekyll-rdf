@@ -187,3 +187,4 @@ plha:gem plh:predicate plh:object.
 <http://example.org/B> a <http://example.org/Thing> .
 <http://example.org/B#some> a <http://example.org/Thing> .
 <http://example.org/C#some> a <http://example.org/Thing> .
+<http://www.ifi.uio.no/INF3580/ex/hybrid/> rdfs:label "Some label".

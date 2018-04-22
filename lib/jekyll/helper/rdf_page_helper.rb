@@ -2,6 +2,17 @@ module Jekyll
   module JekyllRdf
     module Helper
       module RdfPageHelper
+
+        def assimilate_page page
+          self.data.merge!(page.data)
+          if self.content.nil?
+            self.content = page.content
+          else
+            self.content.gsub!(/{{\s*content\s*}}/, page.content)
+          end
+          self
+        end
+
         private
         include Jekyll::JekyllRdf::Helper::RdfPrefixHelper
         ##
